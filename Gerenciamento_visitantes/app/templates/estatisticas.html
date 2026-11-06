@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}
+estatisticas
+{% endblock %}
+{% block content %}
+    <h1 class="mb-4">Estatísticas do parque</h1>
+
+        <div class="row g-4">
+
+            <!-- Total de visitantes -->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="card card-estatistica">
+                    <div class="card-body p-4">
+                        <h2 class="card-title">Total de visitantes</h2>
+
+                        <div class="numero total">
+                            {{ total_visitantes|default_if_none:0 }}
+                        </div>
+
+                        <p class="texto-secundario mb-0">
+                            Visitantes cadastrados
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ingressos normais -->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="card card-estatistica">
+                    <div class="card-body p-4">
+                        <h2 class="card-title">Ingressos Normal</h2>
+
+                        <div class="numero normal">
+                            {{ ingressos_normal|default_if_none:0 }}
+                        </div>
+
+                        <p class="texto-secundario mb-0">
+                            Quantidade cadastrada
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ingressos VIP -->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="card card-estatistica">
+                    <div class="card-body p-4">
+                        <h2 class="card-title">Ingressos VIP</h2>
+
+                        <div class="numero vip">
+                            {{ ingressos_vip|default_if_none:0 }}
+                        </div>
+
+                        <p class="texto-secundario mb-0">
+                            Quantidade cadastrada
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ingressos Premium -->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="card card-estatistica">
+                    <div class="card-body p-4">
+                        <h2 class="card-title">Ingressos Premium</h2>
+
+                        <div class="numero premium">
+                            {{ ingressos_premium|default_if_none:0 }}
+                        </div>
+
+                        <p class="texto-secundario mb-0">
+                            Quantidade cadastrada
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Média de idade -->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="card card-estatistica">
+                    <div class="card-body p-4">
+                        <h2 class="card-title">Média de idade</h2>
+
+                        <div class="numero idade">
+                            {{ media_idade|default_if_none:0|floatformat:1 }}
+                        </div>
+
+                        <p class="texto-secundario mb-0">
+                            Anos de idade
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-5">
+            <a href="{% url 'home' %}" class="btn-voltar">
+                Voltar ao início
+            </a>
+        </div>
+
+    </main>
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+{% endblock %}

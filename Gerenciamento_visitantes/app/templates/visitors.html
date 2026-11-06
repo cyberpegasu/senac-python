@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Visitantes
+{% endblock %}
+
+{% block content %}
+<div>
+    <div class="d-flex">
+        <div class="col">
+            <h1>Lista de visitantes</h1>
+            <p>Abaixo está a lista de visitantes do parque</p>
+        </div>
+
+        <div class="col">
+            <form action="" method="get">
+                <div class="d-flex gap-3 align-items-end">
+                    <div class="col">
+                        <label for="name_or_cpf" class="form-label">Buscar por nome ou Cpf</label>
+                        <input type="text" class="form-control" id="name_or_cpf" name="name_or_cpf" value="{{ search }}">
+                    </div>
+
+                    <div class="col">
+                        <label for="ticket_type" class="form-label">Tipo de ingresso</label>
+                        <select name="ticket_type" id="ticket_type" class="form-select">
+                            <option value="0" {% if ticket_type == 0 %} selected {% endif %}>Todos</option>
+                            <option value="1" {% if ticket_type == 1 %} selected {% endif %}>Normal</option>
+                            <option value="2" {% if ticket_type == 2 %} selected {% endif %}>VIP</option>
+                            <option value="3" {% if ticket_type == 3 %} selected {% endif %}>Premium</option>
+                        </select>
+                    </div>
+
+                    <input type="submit" value="Buscar" class="btn btn-primary btn-custom">
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <tr>
+                <th>Id</th>
+                <th>Nome completo</th>
+                <th>Cpf</th>
+                <th>Data de nascimento</th>
+                <th>Data do ingresso</th>
+                <th>Tipo do ingresso</th>
+                <th>Ações</th>
+            </tr>
+
+            {% for visitor in visitors %}
+            <tr>
+                <td>{{ visitor.id }}</td>
+                <td>{{ visitor.first_name }} {{ visitor.last_name }}</td>
+                <td>{{ visitor.cpf }}</td>
+                <td>{{ visitor.birth_date|date:"d/m/Y" }}</td>
+                <td>{{ visitor.ticket_date|date:"d/m/Y" }}</td>
+                <td>{{ visitor.get_ticket_type_display }}</td>
+                <td>
+                    <a href="./update/{{ visitor.id }}/" class="btn btn-outline-primary btn-custom">Editar</a>
+                    <button class="btn btn-danger btn-custom" data-bs-toggle="modal" data-bs-target="#delete_modal"
+                        data-visitor-name="{{ visitor.first_name }} {{ visitor.last_name }}"
+                        data-visitor-id="{{ visitor.id }}">Deletar</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <a class="btn btn-outline-primary btn-custom" href="./create/">Novo visitante</a>
+    </div>
+</div>
+
+<div class="modal fade" id="delete_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Deletar visitante</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Tem certeza que deseja deletar o visitante <strong id="visitor_name"></strong>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <form id="delete_form" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Deletar permanentemente</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const deleteModal = document.getElementById("delete_modal")
+    const deleteForm = document.getElementById('delete_form')
+
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+        const deleteButton = event.relatedTarget
+
+        const visitorName = deleteButton.getAttribute('data-visitor-name')
+        const visitorId = deleteButton.getAttribute('data-visitor-id')
+
+        document.getElementById('visitor_name').textContent = visitorName
+
+        deleteForm.action = `./delete/${visitorId}/`
+    })
+
+</script>
+
+{% endblock %}

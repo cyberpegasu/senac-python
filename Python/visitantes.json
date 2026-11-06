@@ -1,0 +1,18 @@
+[
+    {
+        "nome": "Vitor",
+        "data_nascimento": "19/06/1998",
+        "cpf": "03303303333",
+        "tipo_ingresso": "Premium",
+        "data_visita": "15/09/1997",
+        "numero_ingresso": "ad4501fd-b985-4df0-9f31-29bfaa26e83d"
+    },
+    {
+        "nome": "vi",
+        "data_nascimento": "19/06/1998",
+        "cpf": "00000000000",
+        "tipo_ingresso": "VIP",
+        "data_visita": "19/06/2027",
+        "numero_ingresso": "e6c6a8d0-96ad-4b6d-9752-1a4188fd8de5"
+    }
+]
